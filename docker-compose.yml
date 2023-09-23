@@ -1,0 +1,73 @@
+version: "3.7"
+
+services:
+
+    nginx:
+        container_name: nginx
+        image:          nginx:ft_transcendance
+        build:          ./build/nginx
+        env_file:       .env
+        networks:
+            - ft_transcendance
+        ports:
+            - "80:80"
+        # volumes:
+        depends_on:
+            - frontend
+            - backend
+        restart:        always
+
+    frontend:
+        container_name: frontend
+        image:          frontend:ft_transcendance
+        build:          ./build/frontend
+        env_file:       .env
+        networks:
+            - ft_transcendance
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./frontend-app:/app
+        working_dir:    /app
+        restart:        on-failure
+
+    backend:
+        container_name: backend
+        image:          backend:ft_transcendance
+        build:          ./build/backend/
+        env_file:       .env
+        networks:
+            - ft_transcendance
+        ports:
+            - "3001:3001"
+        volumes:
+            - ./backend-app:/app
+        working_dir:    /app
+        restart:        on-failure
+        depends_on:
+            - postgresql
+
+    postgresql:
+        container_name: postgresql
+        image:          postgres:latest
+        env_file:       .env
+        networks:
+            - ft_transcendance
+        ports:
+            - "5432:5432"
+        volumes:
+            - database:/var/lib/postgresql/data
+        restart:        on-failure
+
+networks:
+    ft_transcendance:
+        name:   ft_transcendance
+        driver: bridge
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${DATA_PATH}/database
