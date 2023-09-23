@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="[https://github.com/byaliego/42-project-badges/blob/main/badges/ft_transcendencee.png]" alt="Ft_Transcendence 42 project badge"/>
+  <img src="https://github.com/byaliego/42-project-badges/blob/main/badges/ft_transcendencee.png" alt="Ft_Transcendence 42 project badge"/>
 </p>
 # :ping_pong: Project Overview
 
